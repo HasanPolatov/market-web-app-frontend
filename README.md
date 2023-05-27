@@ -1,3 +1,3 @@
 # Vue.js app
 
-[Backend](https://github.com/hasanikromovich/backend)
+[Backend](https://github.com/hasanikromovich/market-web-app-backend)
