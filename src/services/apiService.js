@@ -14,8 +14,8 @@ export async function fetchProducts(categoryId) {
 
     try {
         const url = categoryId != null
-            ? `http://localhost:8080/api/products?categoryId=${categoryId}`
-            : "http://localhost:8080/api/products";
+            ? `http://localhost:8080/api/products?categoryId=${categoryId}&sort=id`
+            : "http://localhost:8080/api/products?sort=id";
         const response = await axios.get(url);
         return response.data;
     } catch (error) {

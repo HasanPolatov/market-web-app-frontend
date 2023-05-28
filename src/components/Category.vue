@@ -1,8 +1,9 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import axios from "axios";
-import Table from "@/components/ui/Table.vue";
+import Table from "@/components/ui/table/Table.vue";
+
+import {fetchCategories} from "@/services/apiService";
 
 const categories = ref([{id: 0, name: ""}]);
 
@@ -15,12 +16,7 @@ const fields = [
 ];
 
 onMounted(async () => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/categories");
-    categories.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
+  categories.value = await fetchCategories();
 });
 
 </script>
