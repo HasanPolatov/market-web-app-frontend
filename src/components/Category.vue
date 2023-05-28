@@ -28,8 +28,10 @@ onMounted(async () => {
 <template>
   <div>
     <Table
-        :fields="fields"
-        :table-data="categories"/>
+      :table-data="categories"
+      :fields="fields"
+      :is-action="false"
+      :is-has-options="false"/>
   </div>
 </template>
 

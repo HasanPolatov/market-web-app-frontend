@@ -2,7 +2,7 @@
 
   <Product/>
 <!--  <br>-->
-<!--  <Category></Category>-->
+<!--  <Category/>-->
 
 </template>
 
