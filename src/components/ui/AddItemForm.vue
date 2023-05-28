@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue"
 import axios from "axios";
+import Option from "@/components/utils/Option.vue";
 
 const addingItem = ref(false);
 const newItem = ref({});
@@ -30,12 +31,7 @@ const startAdding = () => {
         <template v-else>
           <select v-model="newItem[field.fieldName]">
             <option disabled selected>choose</option>
-            <option
-                v-for="(option, index) in options"
-                :value="option.id"
-                :key="index"
-            >{{ option.name }}
-            </option>
+            <Option :options="options"/>
           </select>
         </template>
       </template>

@@ -1,8 +1,9 @@
 <script setup>
 import {onMounted, ref, watchEffect} from "vue";
 
-import Table from "@/components/ui/Table.vue";
+import Table from "@/components/ui/table/Table.vue";
 import AddItemForm from "@/components/ui/AddItemForm.vue";
+import Option from "@/components/utils/Option.vue";
 
 import {fetchProducts, fetchCategories} from "@/services/apiService";
 
@@ -50,12 +51,7 @@ watchEffect(async () => {
   <div class="selectAdd">
     <select v-model="selectedCategoryId">
       <option :value="null">all</option>
-      <option
-          v-for="(category, index) in categoriesList"
-          :value="category.id"
-          :key="index"
-      >{{ category.name }}
-      </option>
+      <Option :options="categoriesList"/>
     </select>
 
     <div class="addProduct">

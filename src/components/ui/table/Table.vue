@@ -2,6 +2,8 @@
 
 import {computed, ref} from "vue";
 import axios from "axios";
+import Option from "@/components/utils/Option.vue";
+import TableButtons from "@/components/ui/table/TableButtons.vue";
 
 const editingIndex = ref(null);
 
@@ -42,12 +44,7 @@ const getOptionName = computed(() => {
           <template v-if="editingIndex === index">
             <select v-model="item[field.fieldName]">
               <option disabled selected>choose</option>
-              <option
-                  v-for="(option, index) in options"
-                  :value="option.id"
-                  :key="index"
-              >{{ option.name }}
-              </option>
+              <Option :options="options"/>
             </select>
           </template>
           <template v-else>{{ getOptionName(item[field.fieldName]) }}</template>
@@ -60,13 +57,8 @@ const getOptionName = computed(() => {
         </template>
       </td>
       <td v-if="isAction" class="action">
-        <template v-if="editingIndex === index">
-          <button @click="handleEdit(item)">Save</button>
-        </template>
-        <template v-else>
-          <button @click="startEditing(index)">Edit</button>
-        </template>
-        <button @click="handleDelete(index)">Delete</button>
+        <TableButtons :item="item" :editing-index="editingIndex" :index="index" @delete="handleDelete(index)"
+                      @edit="handleEdit(item)" @start-editing="startEditing(index)"/>
       </td>
     </tr>
   </table>
@@ -105,23 +97,6 @@ td {
 
 .action {
   display: flex;
-}
-
-button + button {
-  margin-left: 8px;
-}
-
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #3e8e41;
 }
 
 input[type="text"],
