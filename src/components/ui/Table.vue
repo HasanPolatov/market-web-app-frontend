@@ -37,7 +37,7 @@ const startEditing = (index) => {
         </template>
         <template v-else>{{ item[field.fieldName] }}</template>
       </td>
-      <td v-if="isAction">
+      <td v-if="isAction" class="action">
         <template v-if="editingIndex === index">
           <button @click="handleEdit(item)">Save</button>
         </template>
@@ -76,6 +76,10 @@ th {
 
 td {
   vertical-align: middle;
+}
+
+.action {
+  display: flex;
 }
 
 button + button {
