@@ -2,28 +2,43 @@
 import {ref} from "vue"
 import axios from "axios";
 
-const addingProduct = ref(false);
+const addingItem = ref(false);
 const newItem = ref({});
 
-const props = defineProps(['adding', 'item', 'url', 'products', 'fields']);
+const props = defineProps(['url', 'items', 'fields', 'isHasOptions', 'options']);
 
 const handleAdd = async (item) => {
   const response = await axios.post(props.url, item);
-  props.products.push(response.data);
-  addingProduct.value = false;
+  props.items.push(response.data);
+  addingItem.value = false;
+  newItem.value = {};
 };
 
 const startAdding = () => {
-  addingProduct.value = true;
+  addingItem.value = true;
 };
 
 </script>
 
-<template>
+<template class="add">
   <form @submit.prevent="handleAdd(newItem)">
-    <template v-if="addingProduct">
-      <input v-for="field of fields" :key="field.id" type="{{field.type}}" :placeholder="field.label"
-             v-model="newItem[field.fieldName]">
+    <template v-if="addingItem">
+      <template v-for="field of fields" :key="field.id">
+        <template v-if="field.isOption === false">
+          <input type="{{field.type}}" :placeholder="field.label" v-model="newItem[field.fieldName]">
+        </template>
+        <template v-else>
+          <select v-model="newItem[field.fieldName]">
+            <option disabled selected>choose</option>
+            <option
+                v-for="(option, index) in options"
+                :value="option.id"
+                :key="index"
+            >{{ option.name }}
+            </option>
+          </select>
+        </template>
+      </template>
       <button type="submit">Save</button>
     </template>
     <template v-else>
@@ -35,7 +50,7 @@ const startAdding = () => {
 <style scoped>
 
 form {
-  margin-top: 16px;
+  margin-top: 5px;
 }
 
 form input {

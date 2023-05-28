@@ -1,6 +1,8 @@
 <template>
 
   <Product/>
+<!--  <br>-->
+<!--  <Category></Category>-->
 
 </template>
 
