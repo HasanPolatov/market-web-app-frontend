@@ -15,19 +15,22 @@ const fields = [
     fieldName: 'name',
     label: 'Name',
     type: 'text',
-    isOption: false
+    isOption: false,
+    isId: false
   },
   {
     fieldName: 'price',
     label: 'Price',
     type: 'text',
-    isOption: false
+    isOption: false,
+    isId: false
   },
   {
     fieldName: 'categoryId',
     label: 'Category',
     type: 'text',
-    isOption: true
+    isOption: true,
+    isId: true
   }
 ];
 
@@ -71,6 +74,8 @@ watchEffect(async () => {
         :table-data="productsList"
         :fields="fields"
         :is-action="true"
+        :is-has-options="true"
+        :options="categoriesList"
         :url="`http://localhost:8080/api/product`"/>
   </div>
 

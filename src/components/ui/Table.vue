@@ -1,11 +1,11 @@
 <script setup>
 
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import axios from "axios";
 
 const editingIndex = ref(null);
 
-const props = defineProps(['tableData', 'fields', 'isAction', 'url']);
+const props = defineProps(['tableData', 'fields', 'isAction', 'url', 'isHasOptions', 'options']);
 
 const handleEdit = async (item) => {
   await axios.put(props.url, item);
@@ -21,21 +21,43 @@ const startEditing = (index) => {
   editingIndex.value = index;
 };
 
+const getOptionName = computed(() => {
+  return (optionId) => {
+    const option = props.options.find((option) => option.id === optionId);
+    return option ? option.name : "";
+  };
+});
+
 </script>
 
 <template>
-
   <table>
     <tr>
       <th v-for="(field, thIndex) of fields" :key="`th-${thIndex}`">{{ field.label }}</th>
       <th v-if="isAction">Action</th>
     </tr>
     <tr v-for="(item, index) of tableData" :key="`table-${index}`">
-      <td v-for="(field, trIndex) of  fields" :key="`tr-${trIndex}`">
-        <template v-if="editingIndex === index">
-          <input type="text" v-model="item[field.fieldName]">
+      <td v-for="(field, trIndex) of fields" :key="`tr-${trIndex}`">
+        <template v-if="isHasOptions && field.isId">
+          <template v-if="editingIndex === index">
+            <select v-model="item[field.fieldName]">
+              <option disabled selected>choose</option>
+              <option
+                  v-for="(option, index) in options"
+                  :value="option.id"
+                  :key="index"
+              >{{ option.name }}
+              </option>
+            </select>
+          </template>
+          <template v-else>{{ getOptionName(item[field.fieldName]) }}</template>
         </template>
-        <template v-else>{{ item[field.fieldName] }}</template>
+        <template v-else>
+          <template v-if="editingIndex === index">
+            <input type="text" v-model="item[field.fieldName]"/>
+          </template>
+          <template v-else>{{ item[field.fieldName] }}</template>
+        </template>
       </td>
       <td v-if="isAction" class="action">
         <template v-if="editingIndex === index">
@@ -44,13 +66,16 @@ const startEditing = (index) => {
         <template v-else>
           <button @click="startEditing(index)">Edit</button>
         </template>
-
         <button @click="handleDelete(index)">Delete</button>
       </td>
     </tr>
   </table>
-
 </template>
+
+<style scoped>
+/* ... */
+</style>
+
 
 <style scoped>
 
