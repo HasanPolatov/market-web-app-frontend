@@ -1,21 +1,21 @@
 <script setup>
 
 import {computed, ref} from "vue";
-import axios from "axios";
 import Option from "@/components/utils/Option.vue";
 import TableButtons from "@/components/ui/table/TableButtons.vue";
+import http from "@/features/http";
 
 const editingIndex = ref(null);
 
 const props = defineProps(['tableData', 'fields', 'isAction', 'url', 'isHasOptions', 'options']);
 
 const handleEdit = async (item) => {
-  await axios.put(props.url, item);
+  await http.put(props.url, item);
   editingIndex.value = null;
 };
 
 const handleDelete = async (index) => {
-  await axios.delete(props.url + "/" + props.tableData[index].id);
+  await http.delete(props.url + "/" + props.tableData[index].id);
   props.tableData.splice(index, 1);
 };
 

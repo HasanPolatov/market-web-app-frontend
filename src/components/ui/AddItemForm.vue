@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from "vue"
-import axios from "axios";
+import http from "@/features/http";
 import Option from "@/components/utils/Option.vue";
 
 const addingItem = ref(false);
@@ -9,7 +9,7 @@ const newItem = ref({});
 const props = defineProps(['url', 'items', 'fields', 'isHasOptions', 'options']);
 
 const handleAdd = async (item) => {
-  const response = await axios.post(props.url, item);
+  const response = await http.post(props.url, item);
   props.items.push(response.data);
   addingItem.value = false;
   newItem.value = {};

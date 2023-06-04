@@ -60,7 +60,7 @@ watchEffect(async () => {
           :fields="fields"
           :is-has-options="true"
           :options="categoriesList"
-          :url="`http://localhost:8080/api/product`"/>
+          :url="`/product`"/>
     </div>
   </div>
 
@@ -72,7 +72,7 @@ watchEffect(async () => {
         :is-action="true"
         :is-has-options="true"
         :options="categoriesList"
-        :url="`http://localhost:8080/api/product`"/>
+        :url="`/product`"/>
   </div>
 
 </template>
