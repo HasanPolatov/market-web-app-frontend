@@ -14,7 +14,7 @@ const authLogin = ref({
 
 const login = async () => {
   http
-      .post("http://localhost:8080/authenticate", authLogin.value)
+      .post("/authenticate", authLogin.value)
       .then((response) => {
             data.setAuthToken(response.data.jwtToken);
             router.push({name: 'Main'})
